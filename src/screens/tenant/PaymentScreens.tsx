@@ -258,7 +258,7 @@ export const PaymentHistoryScreen = ({ navigation }: any) => {
 const st = StyleSheet.create({
   bill: { flexDirection: "row", alignItems: "center", padding: 14, borderRadius: radius.md, borderWidth: 1.5, borderColor: colors.border, backgroundColor: colors.surface },
   billOn: { borderColor: colors.primary, backgroundColor: colors.primarySoft },
-  upload: { flex: 1, height: 88, borderRadius: radius.md, borderWidth: 1.5, borderStyle: "dashed", borderColor: "#C7D2FE", backgroundColor: "#FAFAFF", alignItems: "center", justifyContent: "center" },
+  upload: { flex: 1, height: 88, borderRadius: radius.md, borderWidth: 1.5, borderStyle: "dashed", borderColor: "#BFD7F5", backgroundColor: "#F6FAFE", alignItems: "center", justifyContent: "center" },
   preview: { width: 60, height: 60, borderRadius: 12, backgroundColor: colors.surfaceAlt },
   success: { width: 120, height: 120, borderRadius: 60, backgroundColor: colors.success, alignItems: "center", justifyContent: "center" },
 });

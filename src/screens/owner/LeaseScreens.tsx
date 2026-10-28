@@ -331,7 +331,7 @@ const InviteResult = ({ invite, onDone }: { invite: any; onDone: () => void }) =
     <Screen header={<Header title="Invite created" back={false} />} footer={<Button title="Done" onPress={onDone} />}>
       <FadeIn>
         <GradientCard colorsList={gradients.brand}>
-          <T v="overline" color="#C7D2FE">Invite code</T>
+          <T v="overline" color="#BFD7F5">Invite code</T>
           <T style={{ fontFamily: fonts.extrabold, fontSize: 36, lineHeight: 46, color: "#fff", letterSpacing: 3, marginTop: 8 }} numberOfLines={1} adjustsFontSizeToFit selectable>{invite.code}</T>
           <T v="small" color="rgba(255,255,255,0.8)" style={{ marginTop: 8 }}>For {invite.invite.tenant_email} · expires {fmtDate(invite.invite.expires_at)}</T>
           <Row gap={10} style={{ marginTop: 18 }}>

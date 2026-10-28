@@ -23,29 +23,48 @@ export const SignatureScreen = ({ navigation }: any) => {
   const [saving, setSaving] = useState(false);
   const live = useRef("");
   const pointCount = useRef(0);
+  const sizeRef = useRef(size);
+  sizeRef.current = size;
 
-  const responder = useMemo(() => PanResponder.create({
-    onStartShouldSetPanResponder: () => true,
-    onMoveShouldSetPanResponder: () => true,
-    onPanResponderGrant: (e) => {
-      const { locationX: x, locationY: y } = e.nativeEvent;
-      live.current = `M${r1(x)} ${r1(y)}`;
-      pointCount.current = 1;
-      setCurrent(live.current);
-    },
-    onPanResponderMove: (e) => {
-      if (pointCount.current > 600) return; // keep each stroke compact
-      const { locationX: x, locationY: y } = e.nativeEvent;
-      live.current += ` L${r1(x)} ${r1(y)}`;
-      pointCount.current++;
-      setCurrent(live.current);
-    },
-    onPanResponderRelease: () => {
-      if (live.current && pointCount.current > 1) setPaths((p) => [...p, live.current].slice(-40));
+  const responder = useMemo(() => {
+    // Keep the point inside the pad so strokes never jump outside it.
+    const pt = (e: any) => {
+      const { locationX, locationY } = e.nativeEvent;
+      const x = Math.max(0, Math.min(locationX, sizeRef.current.width));
+      const y = Math.max(0, Math.min(locationY, sizeRef.current.height));
+      return `${r1(x)} ${r1(y)}`;
+    };
+    const finish = () => {
+      if (live.current) {
+        // A tap (single point) becomes a tiny dot so it still shows up.
+        const d = pointCount.current > 1 ? live.current : `${live.current} l0.1 0.1`;
+        setPaths((p) => [...p, d].slice(-40));
+      }
       live.current = "";
       setCurrent("");
-    },
-  }), []);
+    };
+    return PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      // Don't let the screen's back-swipe or other gestures steal the stroke mid-draw.
+      onPanResponderTerminationRequest: () => false,
+      onShouldBlockNativeResponder: () => true,
+      onPanResponderGrant: (e) => {
+        live.current = `M${pt(e)}`;
+        pointCount.current = 1;
+        setCurrent(live.current);
+      },
+      onPanResponderMove: (e) => {
+        if (pointCount.current > 600) return; // keep each stroke compact
+        live.current += ` L${pt(e)}`;
+        pointCount.current++;
+        setCurrent(live.current);
+      },
+      onPanResponderRelease: finish,
+      // If the OS still takes the touch, keep what was drawn instead of dropping it.
+      onPanResponderTerminate: finish,
+    });
+  }, []);
 
   const save = async () => {
     if (!paths.length) return toast.error("Draw your signature first");
@@ -68,11 +87,15 @@ export const SignatureScreen = ({ navigation }: any) => {
       <View style={{ padding: 20, flex: 1 }}>
         <T v="body">Sign with your finger. It's printed as the authorised signatory on invoices, payment receipts and deposit settlements.</T>
         <View style={st.pad} onLayout={(e) => setSize({ width: e.nativeEvent.layout.width, height: e.nativeEvent.layout.height })} {...responder.panHandlers}>
-          <Svg width="100%" height="100%">
-            {[...paths, current].filter(Boolean).map((d, i) => (
-              <Path key={i} d={d} stroke="#1E3A8A" strokeWidth={3} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-            ))}
-          </Svg>
+          {/* The drawing must not receive touches itself: otherwise starting a stroke on an existing line
+              reports coordinates relative to that line, not the pad. */}
+          <View style={StyleSheet.absoluteFill} pointerEvents="none">
+            <Svg width={size.width} height={size.height}>
+              {[...paths, current].filter(Boolean).map((d, i) => (
+                <Path key={i} d={d} stroke="#003488" strokeWidth={3} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+              ))}
+            </Svg>
+          </View>
           {!paths.length && !current && (
             <View style={st.hint} pointerEvents="none">
               <Ionicons name="create-outline" size={26} color={colors.textMuted} />

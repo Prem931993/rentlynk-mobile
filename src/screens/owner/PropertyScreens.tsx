@@ -9,7 +9,7 @@ import { AmountField, Field, SearchBar, SelectField } from "../../components/Inp
 import { PropertyCard } from "../../components/Domain";
 import { Loadable } from "../../components/States";
 import { confirm, toast } from "../../components/Feedback";
-import { colors, fonts, radius, shadow } from "../../theme";
+import { colors, fonts, gradients, radius, shadow } from "../../theme";
 import { Owner } from "../../api/endpoints";
 import { errorMessage, fieldErrors, fileUrl } from "../../api/client";
 import { useLoad } from "../../utils/useLoad";
@@ -78,7 +78,7 @@ export const PropertyDetailScreen = ({ navigation, route }: any) => {
     <Screen scroll={false}>
       <ScrollView contentContainerStyle={{ paddingBottom: insets.bottom + 120 }} showsVerticalScrollIndicator={false}>
         <View style={{ height: 260 }}>
-          {cover ? <Image source={{ uri: cover }} style={StyleSheet.absoluteFill} /> : <LinearGradient colors={["#4F46E5", "#7C3AED"]} style={StyleSheet.absoluteFill} />}
+          {cover ? <Image source={{ uri: cover }} style={StyleSheet.absoluteFill} /> : <LinearGradient colors={gradients.brand} style={StyleSheet.absoluteFill} />}
           <LinearGradient colors={["rgba(11,16,38,0.45)", "transparent", "rgba(11,16,38,0.85)"]} style={StyleSheet.absoluteFill} />
           <Row between style={{ position: "absolute", top: insets.top + 8, left: 16, right: 16 }}>
             <IconButton icon="chevron-back" onPress={() => navigation.goBack()} bg="rgba(255,255,255,0.9)" label="Back" />

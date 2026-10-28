@@ -127,7 +127,7 @@ export const Avatar = ({ name, uri, size = 44, color = colors.primary }: { name?
   return src ? (
     <Image source={{ uri: src }} style={{ width: size, height: size, borderRadius: size / 2, backgroundColor: colors.surfaceAlt }} />
   ) : (
-    <LinearGradient colors={[color, colors.violet]} style={{ width: size, height: size, borderRadius: size / 2, alignItems: "center", justifyContent: "center" }}>
+    <LinearGradient colors={[color, colors.secondary]} style={{ width: size, height: size, borderRadius: size / 2, alignItems: "center", justifyContent: "center" }}>
       <Text style={{ color: "#fff", fontFamily: fonts.bold, fontSize: size * 0.36 }}>{initials(name)}</Text>
     </LinearGradient>
   );
@@ -254,7 +254,7 @@ export const Notice = ({ tone = "info", title, message, icon, action, onAction, 
 
 export const EmptyState = ({ icon, title, message, action, onAction }: { icon: IconName; title: string; message?: string; action?: string; onAction?: () => void }) => (
   <View style={{ alignItems: "center", paddingVertical: 48, paddingHorizontal: 24 }}>
-    <LinearGradient colors={["#EEF0FF", "#F5EEFF"]} style={{ width: 96, height: 96, borderRadius: 48, alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
+    <LinearGradient colors={[colors.primarySoft, colors.secondarySoft]} style={{ width: 96, height: 96, borderRadius: 48, alignItems: "center", justifyContent: "center", marginBottom: 18 }}>
       <Ionicons name={icon} size={42} color={colors.primary} />
     </LinearGradient>
     <T v="h3" center>{title}</T>

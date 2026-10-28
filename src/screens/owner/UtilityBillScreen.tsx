@@ -120,6 +120,6 @@ export const AddUtilityBillScreen = ({ navigation, route }: any) => {
 };
 
 const st = StyleSheet.create({
-  upload: { flex: 1, height: 86, borderRadius: radius.md, borderWidth: 1.5, borderStyle: "dashed", borderColor: "#C7D2FE", backgroundColor: "#FAFAFF", alignItems: "center", justifyContent: "center" },
+  upload: { flex: 1, height: 86, borderRadius: radius.md, borderWidth: 1.5, borderStyle: "dashed", borderColor: "#BFD7F5", backgroundColor: "#F6FAFE", alignItems: "center", justifyContent: "center" },
   preview: { width: 56, height: 56, borderRadius: 12, backgroundColor: colors.surfaceAlt },
 });

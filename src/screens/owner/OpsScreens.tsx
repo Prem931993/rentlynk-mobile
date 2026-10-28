@@ -108,7 +108,7 @@ export const MoveOutDetailScreen = ({ route, navigation }: any) => {
         {mo && (
           <>
             <GradientCard colorsList={mo.status === "DISPUTED" ? gradients.sunset : gradients.hero}>
-              <Row between><T v="overline" color="#C7D2FE">Planned move-out</T><Badge status={mo.status} /></Row>
+              <Row between><T v="overline" color="#BFD7F5">Planned move-out</T><Badge status={mo.status} /></Row>
               <T v="h1" color="#fff" style={{ marginTop: 6 }}>{fmtDate(mo.planned_move_out_date)}</T>
               <T v="small" color="rgba(226,232,255,0.8)">Notice on {fmtDate(mo.notice_date)}{mo.reason ? ` · "${mo.reason}"` : ""}</T>
               {mo.short_notice && <View style={{ marginTop: 10 }}><Badge label="Shorter than notice / lock-in period" tone="warning" icon="warning" /></View>}

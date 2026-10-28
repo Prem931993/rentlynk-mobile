@@ -52,7 +52,7 @@ export const OwnerDashboardScreen = ({ navigation }: any) => {
           <Row gap={18} style={{ marginTop: 22 }}>
             {d ? <Ring value={collectedRatio} label={`${Math.round(collectedRatio * 100)}%`} sub="collected" size={96} color="#34D399" /> : <Skeleton width={96} height={96} radius={48} style={{ opacity: 0.2 }} />}
             <View style={{ flex: 1 }}>
-              <T v="overline" color="rgba(199,210,254,0.85)">{MONTHS[now.getMonth()]} rent</T>
+              <T v="overline" color="rgba(191,215,245,0.85)">{MONTHS[now.getMonth()]} rent</T>
               <T v="amount" color="#fff" style={{ marginTop: 4 }}>{d ? money(d.this_month.paid) : "—"}</T>
               <T v="small" color="rgba(226,232,255,0.75)">of {d ? money(d.this_month.billed) : "—"} billed</T>
             </View>
@@ -75,7 +75,7 @@ export const OwnerDashboardScreen = ({ navigation }: any) => {
                 {d.pending_verifications > 0 && <Alert icon="cash-outline" tone={colors.warning} title={`${d.pending_verifications} payment${d.pending_verifications > 1 ? "s" : ""} to verify`} subtitle="Check proof and approve or reject" onPress={() => navigation.navigate("Billing", { tab: "review" })} />}
                 {d.overdue.count > 0 && <Alert icon="alert-circle-outline" tone={colors.danger} title={`${d.overdue.count} overdue invoice${d.overdue.count > 1 ? "s" : ""}`} subtitle={`${money(d.overdue.amount)} past due · send a reminder`} onPress={() => navigation.navigate("Billing", { tab: "invoices", status: "OVERDUE" })} />}
                 {d.open_maintenance > 0 && <Alert icon="construct-outline" tone={colors.info} title={`${d.open_maintenance} open repair request${d.open_maintenance > 1 ? "s" : ""}`} subtitle="Update status for your tenants" onPress={() => navigation.navigate("Maintenance")} />}
-                {d.active_move_outs > 0 && <Alert icon="exit-outline" tone={colors.violet} title={`${d.active_move_outs} move-out${d.active_move_outs > 1 ? "s" : ""} in progress`} subtitle="Inspect, settle deposit, close lease" onPress={() => navigation.navigate("MoveOuts")} />}
+                {d.active_move_outs > 0 && <Alert icon="exit-outline" tone={colors.secondary} title={`${d.active_move_outs} move-out${d.active_move_outs > 1 ? "s" : ""} in progress`} subtitle="Inspect, settle deposit, close lease" onPress={() => navigation.navigate("MoveOuts")} />}
                 {d.deposit_at_risk?.map((r: any) => (
                   <Alert key={`dep-${r.lease_id}`} icon="warning-outline" tone={colors.danger} title={`${r.agreement_type === "LEASE" ? "Lease amount" : "Deposit"} nearly used · ${r.tenant_name}`}
                     subtitle={`Dues ${money(r.dues, { compact: true })} + painting ${money(r.painting, { compact: true })} vs advance ${money(r.held, { compact: true })}`}
@@ -96,7 +96,7 @@ export const OwnerDashboardScreen = ({ navigation }: any) => {
             <Action icon="add-circle-outline" label="Add property" color={colors.primary} onPress={() => navigation.navigate("PropertyForm")} />
             <Action icon="person-add-outline" label="Add tenant" color={colors.success} onPress={() => navigation.navigate("CreateLease")} />
             <Action icon="document-text-outline" label="New invoice" color={colors.warning} onPress={() => navigation.navigate("CreateInvoice")} />
-            <Action icon="megaphone-outline" label="Send notice" color={colors.violet} onPress={() => navigation.navigate("Announcements")} />
+            <Action icon="megaphone-outline" label="Send notice" color={colors.secondary} onPress={() => navigation.navigate("Announcements")} />
           </Row>
 
           {d && d.properties === 0 && (

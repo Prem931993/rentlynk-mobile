@@ -65,9 +65,9 @@ export const SplashOverlay = ({ ready, onDone }: { ready: boolean; onDone: () =>
 
   return (
     <Animated.View style={[StyleSheet.absoluteFill, { opacity: out, zIndex: 1000 }]} pointerEvents={ready ? "none" : "auto"}>
-      <LinearGradient colors={[...gradients.night, "#312E81"]} style={StyleSheet.absoluteFill} start={{ x: 0.2, y: 0 }} end={{ x: 0.8, y: 1 }} />
-      <Animated.View style={[st.orb, { top: -80, left: -60, backgroundColor: "rgba(99,102,241,0.35)", transform: [{ translateY: orb.interpolate({ inputRange: [0, 1], outputRange: [0, 30] }) }] }]} />
-      <Animated.View style={[st.orb, { bottom: -100, right: -80, backgroundColor: "rgba(139,92,246,0.3)", transform: [{ translateX: orb.interpolate({ inputRange: [0, 1], outputRange: [0, -30] }) }] }]} />
+      <LinearGradient colors={[...gradients.night, "#0A3A82"]} style={StyleSheet.absoluteFill} start={{ x: 0.2, y: 0 }} end={{ x: 0.8, y: 1 }} />
+      <Animated.View style={[st.orb, { top: -80, left: -60, backgroundColor: "rgba(10,91,184,0.4)", transform: [{ translateY: orb.interpolate({ inputRange: [0, 1], outputRange: [0, 30] }) }] }]} />
+      <Animated.View style={[st.orb, { bottom: -100, right: -80, backgroundColor: "rgba(7,166,125,0.28)", transform: [{ translateX: orb.interpolate({ inputRange: [0, 1], outputRange: [0, -30] }) }] }]} />
       <View style={st.center}>
         <View style={{ alignItems: "center", justifyContent: "center" }}>
           <Animated.View style={[st.ring, ringStyle(ring1)]} />
@@ -76,11 +76,11 @@ export const SplashOverlay = ({ ready, onDone }: { ready: boolean; onDone: () =>
             opacity: logo.interpolate({ inputRange: [0, 0.4, 1, 1.25], outputRange: [0, 1, 1, 0] }),
             transform: [{ scale: logo.interpolate({ inputRange: [0, 1, 1.25], outputRange: [0.3, 1, 1.4] }) }, { rotate: logo.interpolate({ inputRange: [0, 1], outputRange: ["-25deg", "0deg"], extrapolate: "clamp" }) }],
           }}>
-            <View style={st.glow}><LogoMark size={96} /></View>
+            <View style={st.glow}><LogoMark size={96} tile /></View>
           </Animated.View>
         </View>
         <Animated.View style={[{ marginTop: 28 }, rise(word)]}><Wordmark size={38} color="#FFFFFF" /></Animated.View>
-        <Animated.Text style={[st.tagline, rise(tag)]}>Renting, simplified.</Animated.Text>
+        <Animated.Text style={[st.tagline, rise(tag)]}>Rent Smarter. Live Better.</Animated.Text>
       </View>
       <View style={st.barTrack}>
         <Animated.View style={[st.barFill, { transform: [{ translateX: bar.interpolate({ inputRange: [0, 1], outputRange: [-80, 160] }) }] }]} />
@@ -92,11 +92,11 @@ export const SplashOverlay = ({ ready, onDone }: { ready: boolean; onDone: () =>
 
 const st = StyleSheet.create({
   center: { flex: 1, alignItems: "center", justifyContent: "center" },
-  ring: { position: "absolute", width: 120, height: 120, borderRadius: 60, borderWidth: 2, borderColor: "#A5B4FC" },
-  glow: { shadowColor: "#818CF8", shadowOpacity: 0.8, shadowRadius: 30, shadowOffset: { width: 0, height: 0 }, elevation: 20, borderRadius: 28 },
-  tagline: { marginTop: 8, fontFamily: fonts.medium, fontSize: 15, color: "#C7D2FE", letterSpacing: 0.4 },
+  ring: { position: "absolute", width: 120, height: 120, borderRadius: 60, borderWidth: 2, borderColor: "#5EE0B0" },
+  glow: { shadowColor: "#3DDC97", shadowOpacity: 0.8, shadowRadius: 30, shadowOffset: { width: 0, height: 0 }, elevation: 20, borderRadius: 28 },
+  tagline: { marginTop: 8, fontFamily: fonts.medium, fontSize: 15, color: "#BFD7F5", letterSpacing: 0.4 },
   orb: { position: "absolute", width: width * 0.9, height: width * 0.9, borderRadius: width },
   barTrack: { position: "absolute", bottom: 90, alignSelf: "center", width: 160, height: 4, borderRadius: 2, backgroundColor: "rgba(255,255,255,0.12)", overflow: "hidden" },
-  barFill: { width: 80, height: 4, borderRadius: 2, backgroundColor: "#A5B4FC" },
-  foot: { position: "absolute", bottom: 52, alignSelf: "center", fontFamily: fonts.semibold, fontSize: 12, color: "rgba(199,210,254,0.7)", letterSpacing: 1.5 },
+  barFill: { width: 80, height: 4, borderRadius: 2, backgroundColor: "#3DDC97" },
+  foot: { position: "absolute", bottom: 52, alignSelf: "center", fontFamily: fonts.semibold, fontSize: 12, color: "rgba(191,215,245,0.7)", letterSpacing: 1.5 },
 });

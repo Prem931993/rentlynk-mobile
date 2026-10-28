@@ -249,7 +249,7 @@ export const SecurityScreen = () => {
 
 const st = StyleSheet.create({
   notif: { backgroundColor: colors.surface, borderRadius: radius.md, padding: 14, marginBottom: 10, borderWidth: 1, borderColor: colors.border },
-  notifUnread: { borderColor: "#C7D2FE", backgroundColor: "#FAFAFF" },
+  notifUnread: { borderColor: "#BFD7F5", backgroundColor: "#F6FAFE" },
   notifIcon: { width: 40, height: 40, borderRadius: 12, alignItems: "center", justifyContent: "center" },
   unreadDot: { width: 9, height: 9, borderRadius: 5, backgroundColor: colors.primary, marginTop: 6 },
   camera: { position: "absolute", right: 0, bottom: 0, width: 32, height: 32, borderRadius: 16, backgroundColor: colors.primary, alignItems: "center", justifyContent: "center", borderWidth: 3, borderColor: colors.bg, ...shadow(1) },

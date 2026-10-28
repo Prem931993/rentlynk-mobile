@@ -86,5 +86,5 @@ const st = StyleSheet.create({
   footer: { paddingHorizontal: space.xl, paddingTop: 12, backgroundColor: colors.surface, borderTopWidth: 1, borderTopColor: colors.border },
   hero: { paddingHorizontal: space.xl, paddingBottom: 56, borderBottomLeftRadius: 32, borderBottomRightRadius: 32, overflow: "hidden" },
   ringA: { position: "absolute", width: 320, height: 320, borderRadius: 160, borderWidth: 40, borderColor: "rgba(255,255,255,0.05)", top: -140, right: -120 },
-  ringB: { position: "absolute", width: 180, height: 180, borderRadius: 90, backgroundColor: "rgba(124,58,237,0.25)", bottom: -90, left: -40 },
+  ringB: { position: "absolute", width: 180, height: 180, borderRadius: 90, backgroundColor: "rgba(7,166,125,0.25)", bottom: -90, left: -40 },
 });

@@ -486,6 +486,6 @@ const st = StyleSheet.create({
   cat: { width: (width - 40 - 32) / 5, aspectRatio: 0.95, borderRadius: radius.md, borderWidth: 1.5, borderColor: colors.border, backgroundColor: colors.surface, alignItems: "center", justifyContent: "center" },
   catOn: { borderColor: colors.primary, backgroundColor: colors.primarySoft },
   photo: { width: 76, height: 76, borderRadius: 14, backgroundColor: colors.surfaceAlt },
-  addPhoto: { borderWidth: 1.5, borderStyle: "dashed", borderColor: "#C7D2FE", alignItems: "center", justifyContent: "center", backgroundColor: "#FAFAFF" },
+  addPhoto: { borderWidth: 1.5, borderStyle: "dashed", borderColor: "#BFD7F5", alignItems: "center", justifyContent: "center", backgroundColor: "#F6FAFE" },
   photoX: { position: "absolute", top: -6, right: -6, width: 22, height: 22, borderRadius: 11, backgroundColor: colors.danger, alignItems: "center", justifyContent: "center" },
 });

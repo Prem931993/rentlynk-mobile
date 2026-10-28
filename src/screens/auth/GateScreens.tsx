@@ -155,12 +155,12 @@ export const LockScreen = () => {
   const attempt = async () => { const ok = await unlock(); setFailed(!ok); if (!ok) haptic.error(); };
   useEffect(() => { attempt(); }, []);
   return (
-    <LinearGradient colors={[...gradients.night, "#312E81"]} style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 28 }}>
-      <LogoMark size={72} />
+    <LinearGradient colors={[...gradients.night, "#0A3A82"]} style={{ flex: 1, alignItems: "center", justifyContent: "center", padding: 28 }}>
+      <LogoMark size={72} tile />
       <T v="h1" color="#fff" style={{ marginTop: 24 }}>Welcome back</T>
       <T v="body" color="rgba(226,232,255,0.75)" center style={{ marginTop: 6 }}>{user?.name}{"\n"}Unlock to continue</T>
       <Tap onPress={attempt} style={st.fp}>
-        <Ionicons name="finger-print" size={44} color="#C7D2FE" />
+        <Ionicons name="finger-print" size={44} color="#9EC5F2" />
       </Tap>
       {failed && <T v="small" color="#FDA4AF">Couldn't verify. Try again.</T>}
       <View style={{ position: "absolute", bottom: insets.bottom + 24, left: 28, right: 28 }}>
@@ -172,5 +172,5 @@ export const LockScreen = () => {
 
 const st = StyleSheet.create({
   read: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 999, backgroundColor: colors.primarySoft },
-  fp: { marginTop: 40, marginBottom: 16, width: 96, height: 96, borderRadius: 48, backgroundColor: "rgba(165,180,252,0.12)", borderWidth: 1, borderColor: "rgba(165,180,252,0.3)", alignItems: "center", justifyContent: "center" },
+  fp: { marginTop: 40, marginBottom: 16, width: 96, height: 96, borderRadius: 48, backgroundColor: "rgba(158,197,242,0.12)", borderWidth: 1, borderColor: "rgba(158,197,242,0.3)", alignItems: "center", justifyContent: "center" },
 });

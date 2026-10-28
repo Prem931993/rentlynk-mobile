@@ -231,7 +231,7 @@ export const PinInput = ({ value, onChange, onComplete, label, error, autoFocus 
             const filled = i < value.length;
             const active = i === value.length;
             return (
-              <View key={i} style={[st.pinCell, active && { borderColor: colors.primary, backgroundColor: "#FAFAFF" }, filled && { borderColor: colors.primary }, !!error && { borderColor: colors.danger }]}>
+              <View key={i} style={[st.pinCell, active && { borderColor: colors.primary, backgroundColor: "#F6FAFE" }, filled && { borderColor: colors.primary }, !!error && { borderColor: colors.danger }]}>
                 {filled && <View style={[st.pinDot, !!error && { backgroundColor: colors.danger }]} />}
               </View>
             );

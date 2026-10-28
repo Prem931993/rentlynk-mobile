@@ -24,7 +24,7 @@ const TabItem = ({ focused, name, onPress, badge }: { focused: boolean; name: st
   const [on, off, label] = TAB_ICONS[name] || ["ellipse", "ellipse-outline", name];
   return (
     <Pressable onPress={onPress} style={st.item} accessibilityRole="tab" accessibilityState={{ selected: focused }} accessibilityLabel={label}>
-      <Animated.View style={[st.pill, { backgroundColor: a.interpolate({ inputRange: [0, 1], outputRange: ["rgba(79,70,229,0)", "rgba(79,70,229,0.1)"] }) }]}>
+      <Animated.View style={[st.pill, { backgroundColor: a.interpolate({ inputRange: [0, 1], outputRange: ["rgba(10,91,184,0)", "rgba(10,91,184,0.1)"] }) }]}>
         <Ionicons name={focused ? on : off} size={22} color={focused ? colors.primary : colors.textMuted} />
         {!!badge && <View style={st.badge}><Text style={st.badgeText}>{badge > 9 ? "9+" : badge}</Text></View>}
       </Animated.View>

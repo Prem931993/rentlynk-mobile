@@ -3,7 +3,7 @@
     "name": "RentLynk",
     "slug": "rentlynk",
     "scheme": "rentlynk",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -13,22 +13,24 @@
       "infoPlist": {
         "NSFaceIDUsageDescription": "Use Face ID to unlock RentLynk securely.",
         "NSCameraUsageDescription": "Take photos of payment proof and maintenance issues.",
-        "NSPhotoLibraryUsageDescription": "Attach payment screenshots and photos."
+        "NSPhotoLibraryUsageDescription": "Attach payment screenshots and photos.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "android": {
       "package": "com.rentlynk.app",
       "adaptiveIcon": {
-        "backgroundColor": "#0B1026",
+        "backgroundColor": "#FFFFFF",
         "foregroundImage": "./assets/android-icon-foreground.png",
         "backgroundImage": "./assets/android-icon-background.png",
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
       "permissions": [
-        "USE_BIOMETRIC",
-        "USE_FINGERPRINT",
-        "CAMERA"
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ],
       "allowBackup": false
     },
@@ -43,7 +45,7 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#0B1026",
+          "backgroundColor": "#041634",
           "image": "./assets/splash-icon.png",
           "imageWidth": 120
         }
@@ -63,6 +65,11 @@
       ],
       "expo-status-bar"
     ],
-    "backgroundColor": "#0B1026"
+    "backgroundColor": "#041634",
+    "extra": {
+      "eas": {
+        "projectId": "f75ff844-a6be-4114-9046-b1f9bd18ed3d"
+      }
+    }
   }
 }

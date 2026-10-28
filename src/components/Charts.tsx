@@ -33,7 +33,7 @@ export const CollectionChart = ({ data, height = 170 }: { data: { month: number;
             const hc = (d.collected / max) * (chartH - 8) * g;
             return (
               <G key={i}>
-                <Rect x={cx - bw - 2} y={chartH - hb} width={bw} height={hb} rx={bw / 2.5} fill="#C7D2FE" />
+                <Rect x={cx - bw - 2} y={chartH - hb} width={bw} height={hb} rx={bw / 2.5} fill="#BFD7F5" />
                 <Rect x={cx + 2} y={chartH - hc} width={bw} height={hc} rx={bw / 2.5} fill={colors.primary} />
                 <SvgText x={cx} y={height - 6} fontSize={11} fontFamily={fonts.semibold} fill={colors.textMuted} textAnchor="middle">
                   {MONTHS_SHORT[d.month - 1]}
@@ -44,7 +44,7 @@ export const CollectionChart = ({ data, height = 170 }: { data: { month: number;
         </Svg>
       )}
       <View style={{ flexDirection: "row", gap: 16, marginTop: 8 }}>
-        <Legend color="#C7D2FE" label="Billed" />
+        <Legend color="#BFD7F5" label="Billed" />
         <Legend color={colors.primary} label="Collected" />
         <Text style={{ marginLeft: "auto", fontFamily: fonts.semibold, fontSize: 12, color: colors.textMuted }}>Peak {money(max, { compact: true })}</Text>
       </View>

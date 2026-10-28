@@ -1,13 +1,15 @@
 import { Platform, TextStyle, ViewStyle } from "react-native";
 
 export const colors = {
-  // Brand
-  primary: "#4F46E5",
-  primaryDark: "#3730A3",
-  primarySoft: "#EEF0FF",
-  violet: "#7C3AED",
-  ink: "#0B1026", // hero / splash background
-  inkSoft: "#151B3B",
+  // Brand: taken from the RentLynk logo ("Rent" blue, "Lynk" green)
+  primary: "#0A5BB8",
+  primaryDark: "#003488",
+  primarySoft: "#E8F1FC",
+  secondary: "#07A67D",
+  secondaryBright: "#3DDC97", // accent on dark backgrounds
+  secondarySoft: "#E3F6EF",
+  ink: "#041634", // hero / splash background
+  inkSoft: "#0A2350",
 
   // Surfaces
   bg: "#F5F6FB",
@@ -31,16 +33,16 @@ export const colors = {
   dangerSoft: "#FFECEF",
   info: "#0284C7",
   infoSoft: "#E6F4FD",
-  overlay: "rgba(11,16,38,0.55)",
+  overlay: "rgba(4,22,52,0.55)",
 };
 
 export const gradients = {
-  brand: ["#4F46E5", "#7C3AED"] as const,
-  hero: ["#1E1B4B", "#312E81", "#4F46E5"] as const,
-  night: ["#0B1026", "#1E1B4B"] as const,
+  brand: ["#0A5BB8", "#07A67D"] as const,
+  hero: ["#002A6E", "#003C9A", "#0A5BB8"] as const,
+  night: ["#041634", "#06275E"] as const,
   emerald: ["#059669", "#10B981"] as const,
   sunset: ["#F59E0B", "#EF4444"] as const,
-  ocean: ["#0284C7", "#4F46E5"] as const,
+  ocean: ["#0284C7", "#0A5BB8"] as const,
 };
 
 export const radius = { xs: 8, sm: 12, md: 16, lg: 20, xl: 28, pill: 999 };
@@ -75,13 +77,13 @@ export const type = {
 export const shadow = (level: 1 | 2 | 3 = 1): ViewStyle =>
   Platform.select({
     ios: {
-      shadowColor: "#1E1B4B",
+      shadowColor: "#0A2350",
       shadowOpacity: [0.06, 0.1, 0.18][level - 1],
       shadowRadius: [10, 18, 28][level - 1],
       shadowOffset: { width: 0, height: [4, 8, 14][level - 1] },
     },
     android: { elevation: [2, 5, 10][level - 1] },
-    default: { boxShadow: `0 ${[4, 8, 14][level - 1]}px ${[16, 28, 40][level - 1]}px rgba(30,27,75,${[0.06, 0.1, 0.16][level - 1]})` } as any,
+    default: { boxShadow: `0 ${[4, 8, 14][level - 1]}px ${[16, 28, 40][level - 1]}px rgba(10,35,80,${[0.06, 0.1, 0.16][level - 1]})` } as any,
   }) as ViewStyle;
 
 /** Status → colour mapping used across badges, timelines and charts. */
@@ -99,5 +101,6 @@ export const toneColors = {
   danger: { fg: colors.danger, bg: colors.dangerSoft },
   info: { fg: colors.info, bg: colors.infoSoft },
   primary: { fg: colors.primary, bg: colors.primarySoft },
+  secondary: { fg: colors.secondary, bg: colors.secondarySoft },
   neutral: { fg: colors.textSecondary, bg: colors.surfaceAlt },
 };

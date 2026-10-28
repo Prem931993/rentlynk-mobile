@@ -26,7 +26,7 @@ const SLIDES: { title: string; body: string; icon: IconName; grad: readonly [str
     title: "Fair, transparent\nmove-outs",
     body: "Deposit ledger, itemised charges like painting or cleaning, and a settlement both sides can accept — or dispute.",
     icon: "shield-checkmark", grad: gradients.ocean,
-    chips: [{ icon: "receipt", text: "Deposit refund ₹48,000", tone: colors.info }, { icon: "lock-closed", text: "Bank-grade security", tone: colors.violet }],
+    chips: [{ icon: "receipt", text: "Deposit refund ₹48,000", tone: colors.info }, { icon: "lock-closed", text: "Bank-grade security", tone: colors.secondary }],
   },
 ];
 

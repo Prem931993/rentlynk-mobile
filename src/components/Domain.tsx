@@ -3,7 +3,7 @@ import { Image, StyleSheet, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { Avatar, Badge, Card, IconBubble, ProgressBar, Row, T, Tap } from "./ui";
-import { colors, fonts, radius, shadow } from "../theme";
+import { colors, fonts, gradients, radius, shadow } from "../theme";
 import { fmtDate, money, period, relativeDue, titleCase } from "../utils/format";
 import { fileUrl } from "../api/client";
 import { Invoice, Payment } from "../api/endpoints";
@@ -66,7 +66,7 @@ export const PropertyCard = ({ p, onPress }: { p: any; onPress?: () => void }) =
     <Tap onPress={onPress} style={[st.prop, shadow(1)]}>
       <View style={st.cover}>
         {cover ? <Image source={{ uri: cover }} style={StyleSheet.absoluteFill} resizeMode="cover" /> : (
-          <LinearGradient colors={["#6366F1", "#8B5CF6"]} style={[StyleSheet.absoluteFill, { alignItems: "center", justifyContent: "center" }]}>
+          <LinearGradient colors={gradients.brand} style={[StyleSheet.absoluteFill, { alignItems: "center", justifyContent: "center" }]}>
             <Ionicons name="business" size={44} color="rgba(255,255,255,0.8)" />
           </LinearGradient>
         )}

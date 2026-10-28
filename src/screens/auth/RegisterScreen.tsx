@@ -177,7 +177,7 @@ export const RegisterScreen = ({ navigation, route }: any) => {
 
 const st = StyleSheet.create({
   role: { backgroundColor: colors.surface, borderRadius: radius.lg, padding: 18, borderWidth: 2, borderColor: colors.border },
-  roleActive: { borderColor: colors.primary, backgroundColor: "#FAFAFF" },
+  roleActive: { borderColor: colors.primary, backgroundColor: "#F6FAFE" },
   roleIcon: { width: 52, height: 52, borderRadius: 16, alignItems: "center", justifyContent: "center" },
   radio: { width: 24, height: 24, borderRadius: 12, borderWidth: 2, borderColor: colors.borderStrong, alignItems: "center", justifyContent: "center" },
   radioDot: { width: 12, height: 12, borderRadius: 6, backgroundColor: colors.primary },
