@@ -13,15 +13,17 @@ const toPicked = (a: { uri: string; mimeType?: string | null; fileName?: string 
   return { uri: a.uri, type, name: a.fileName || a.name || `${fallback}.${ext}` };
 };
 
-export const pickImage = async (opts: { camera?: boolean; multiple?: boolean } = {}): Promise<PickedFile[]> => {
+/** `crop` opens the system crop step (free-form on Android; iOS only offers a square crop, so it is skipped there). */
+export const pickImage = async (opts: { camera?: boolean; multiple?: boolean; crop?: boolean } = {}): Promise<PickedFile[]> => {
+  const allowsEditing = !!opts.crop && !opts.multiple && Platform.OS === "android";
   if (opts.camera) {
     const perm = await ImagePicker.requestCameraPermissionsAsync();
     if (!perm.granted) throw new Error("Camera permission is needed to take a photo");
-    const r = await ImagePicker.launchCameraAsync({ mediaTypes: ["images"], quality: 0.7 });
+    const r = await ImagePicker.launchCameraAsync({ mediaTypes: ["images"], quality: 0.7, allowsEditing });
     return r.canceled ? [] : r.assets.map((a) => toPicked(a, "photo"));
   }
   const r = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ["images"], quality: 0.7, allowsMultipleSelection: !!opts.multiple, selectionLimit: opts.multiple ? 4 : 1,
+    mediaTypes: ["images"], quality: 0.7, allowsEditing, allowsMultipleSelection: !!opts.multiple, selectionLimit: opts.multiple ? 4 : 1,
   });
   return r.canceled ? [] : r.assets.map((a) => toPicked(a, "image"));
 };

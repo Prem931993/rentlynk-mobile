@@ -1,15 +1,16 @@
 import React, { useMemo, useRef, useState } from "react";
-import { PanResponder, StyleSheet, View } from "react-native";
+import { Image, PanResponder, StyleSheet, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { Ionicons } from "@expo/vector-icons";
 import { Header, Screen } from "../../components/Screen";
-import { Button, Card, IconBubble, IconName, Notice, Row, T } from "../../components/ui";
+import { Button, Card, IconBubble, IconName, Notice, Row, Segmented, T } from "../../components/ui";
+import { appendFile, pickImage, PickedFile } from "../../utils/files";
 import { Toggle } from "../../components/Inputs";
 import { toast } from "../../components/Feedback";
 import { colors, radius } from "../../theme";
 import { useAuth } from "../../stores/authStore";
 import { Auth } from "../../api/endpoints";
-import { errorMessage } from "../../api/client";
+import { errorMessage, fileUrl } from "../../api/client";
 import { haptic } from "../../utils/haptics";
 
 const r1 = (n: number) => Math.round(n * 10) / 10;
@@ -17,6 +18,9 @@ const r1 = (n: number) => Math.round(n * 10) / 10;
 /** Finger-drawn signature, stored as vector strokes and printed on invoices, receipts and settlements. */
 export const SignatureScreen = ({ navigation }: any) => {
   const { user, setUser } = useAuth();
+  const savedImage = user?.signature?.type === "image" ? fileUrl(user.signature.image_url) : null;
+  const [mode, setMode] = useState<"draw" | "image">(savedImage ? "image" : "draw");
+  const [picked, setPicked] = useState<PickedFile | null>(null);
   const [paths, setPaths] = useState<string[]>(user?.signature?.paths || []);
   const [current, setCurrent] = useState("");
   const [size, setSize] = useState({ width: 320, height: 160 });
@@ -66,26 +70,66 @@ export const SignatureScreen = ({ navigation }: any) => {
     });
   }, []);
 
+  const pick = async (camera: boolean) => {
+    try {
+      const [img] = await pickImage({ camera, crop: true });
+      if (!img) return;
+      if (!["image/jpeg", "image/png"].includes(img.type)) return toast.error("Use a JPG or PNG image");
+      setPicked(img);
+    } catch (e) { toast.error(errorMessage(e)); }
+  };
+
   const save = async () => {
-    if (!paths.length) return toast.error("Draw your signature first");
+    if (mode === "draw" && !paths.length) return toast.error("Draw your signature first");
+    if (mode === "image" && !picked) return toast.error(savedImage ? "Choose a new image to replace the current one" : "Choose an image of your signature");
     setSaving(true);
     try {
-      setUser(await Auth.saveSignature({ paths, width: Math.round(size.width), height: Math.round(size.height) }));
+      if (mode === "draw") {
+        setUser(await Auth.saveSignature({ paths, width: Math.round(size.width), height: Math.round(size.height) }));
+      } else {
+        const form = new FormData();
+        await appendFile(form, "signature", picked!);
+        setUser(await Auth.uploadSignatureImage(form));
+      }
       haptic.success();
       toast.success("Signature saved. It will appear on your invoices and receipts.");
       navigation.goBack();
     } catch (e) { toast.error(errorMessage(e)); } finally { setSaving(false); }
   };
 
+  const clear = () => (mode === "draw" ? setPaths([]) : setPicked(null));
+  const preview = picked?.uri || savedImage;
+
   return (
     <Screen header={<Header title="Your signature" />} scroll={false} footer={
       <Row gap={12}>
-        <View style={{ flex: 1 }}><Button title="Clear" variant="ghost" icon="refresh" onPress={() => setPaths([])} /></View>
+        <View style={{ flex: 1 }}><Button title="Clear" variant="ghost" icon="refresh" onPress={clear} /></View>
         <View style={{ flex: 2 }}><Button title="Save signature" icon="checkmark" onPress={save} loading={saving} /></View>
       </Row>
     }>
       <View style={{ padding: 20, flex: 1 }}>
-        <T v="body">Sign with your finger. It's printed as the authorised signatory on invoices, payment receipts and deposit settlements.</T>
+        <Segmented value={mode} onChange={setMode} options={[{ label: "Draw", value: "draw" }, { label: "Upload image", value: "image" }]} />
+        <T v="body" style={{ marginTop: 14 }}>
+          {mode === "draw"
+            ? "Sign with your finger. It's printed as the authorised signatory on invoices, payment receipts and deposit settlements."
+            : "Upload a photo or scan of your signature. For the cleanest result, sign in dark ink on plain white paper and crop close to the signature."}
+        </T>
+        {mode === "image" ? (
+          <>
+            <View style={[st.pad, st.imagePad]}>
+              {preview ? <Image source={{ uri: preview }} style={st.image} resizeMode="contain" /> : (
+                <View style={st.hint} pointerEvents="none">
+                  <Ionicons name="image-outline" size={26} color={colors.textMuted} />
+                  <T v="small">No image chosen</T>
+                </View>
+              )}
+            </View>
+            <Row gap={12} style={{ marginTop: 12 }}>
+              <View style={{ flex: 1 }}><Button title="Choose image" variant="ghost" icon="images-outline" onPress={() => pick(false)} /></View>
+              <View style={{ flex: 1 }}><Button title="Take photo" variant="ghost" icon="camera-outline" onPress={() => pick(true)} /></View>
+            </Row>
+          </>
+        ) : (
         <View style={st.pad} onLayout={(e) => setSize({ width: e.nativeEvent.layout.width, height: e.nativeEvent.layout.height })} {...responder.panHandlers}>
           {/* The drawing must not receive touches itself: otherwise starting a stroke on an existing line
               reports coordinates relative to that line, not the pad. */}
@@ -104,6 +148,7 @@ export const SignatureScreen = ({ navigation }: any) => {
           )}
           <View style={st.baseline} pointerEvents="none" />
         </View>
+        )}
         <Notice tone="info" icon="shield-checkmark" message="Your signature is stored securely and only used on documents you issue." style={{ marginTop: 16 }} />
       </View>
     </Screen>
@@ -150,5 +195,7 @@ export const MessagePreferencesScreen = () => {
 const st = StyleSheet.create({
   pad: { marginTop: 18, height: 220, backgroundColor: colors.surface, borderRadius: radius.lg, borderWidth: 1.5, borderColor: colors.border, borderStyle: "dashed", overflow: "hidden" },
   hint: { position: "absolute", top: 0, bottom: 0, left: 0, right: 0, alignItems: "center", justifyContent: "center", gap: 6 },
+  imagePad: { borderStyle: "solid", alignItems: "center", justifyContent: "center", padding: 12 },
+  image: { width: "100%", height: "100%" },
   baseline: { position: "absolute", left: 24, right: 24, bottom: 48, height: 1, backgroundColor: colors.border },
 });

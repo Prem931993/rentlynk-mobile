@@ -7,7 +7,7 @@ export interface User {
   address?: string | null; emergency_contact_name?: string | null; emergency_contact_phone?: string | null;
   upi_id?: string | null; bank_account_name?: string | null; bank_account_number?: string | null; bank_ifsc?: string | null; bank_name?: string | null;
   preferences?: Record<string, any>; must_change_password?: boolean; registration_source?: string;
-  has_pin?: boolean; has_signature?: boolean; signature?: { paths: string[]; width: number; height: number } | null; created_at?: string; last_login_at?: string;
+  has_pin?: boolean; has_signature?: boolean; signature?: { type?: "draw" | "image"; paths?: string[]; width?: number; height?: number; image_url?: string | null } | null; created_at?: string; last_login_at?: string;
 }
 export interface LegalDoc { id: string; slug: string; title: string; version: number; summary?: string | null; content?: string; published_at?: string }
 export interface Requirements { must_change_password: boolean; must_set_pin?: boolean; pending_consents: LegalDoc[] }
@@ -48,6 +48,7 @@ export const Auth = {
   myConsents: () => get("/auth/consents"),
   updateProfile: (body: object) => put<User>("/auth/profile", body),
   uploadAvatar: (form: FormData) => upload<User>("/auth/avatar", form),
+  uploadSignatureImage: (form: FormData) => upload<User>("/auth/signature/image", form),
   preferences: (body: object) => put("/auth/preferences", body),
   sessions: () => get<any[]>("/auth/sessions"),
   revokeSession: (id: string) => del(`/auth/sessions/${id}`),
